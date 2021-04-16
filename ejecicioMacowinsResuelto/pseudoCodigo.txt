@@ -1,0 +1,66 @@
+
+class Archivo {
+
+	const fecha
+	var property ventas = []
+
+	method hacerUnaVenta(venta){
+
+		ventas.add(venta)
+	}
+
+	method calcularGanancias() = ventas.sum(venta => venta.precioVenta())
+}
+
+class VentaEnEfectivo {
+
+	const fecha
+	var prendas = []
+
+	method agregarPrenda(prenda){
+
+		prendas.add(prenda)
+	}
+
+	method dejarPrenda(prenda){
+
+    		prendas.remove(prenda)
+    	}
+
+	method cantidadPrendasVendidas() = prendas.size()
+
+	method precioTotalVenta() = self.sumaDePreciosDePrendas()
+
+	method sumaDePreciosDePrendas() = prendas.sum(prenda -> prenda.precio())
+}
+
+class VentaConTarjeta inherits VentaEnEfectivo{
+
+	const cantidadCuotas;
+	const coeficiente;
+
+	override method precioVenta() = super() + cantidadCuotas * coeficiente + 0.01 * self.sumaPreciosPrendas()
+}
+
+class Prenda {
+
+	const precioBase;
+	var estadoActual;
+
+	method precio() = estadoActual.precioSegunEstado(precioBase)
+}
+
+object nueva {
+
+	method precioSegunEstado(precioBase) = precioBase
+}
+object promocion {
+	var valorFijo
+
+	method precioSegunEstado(precioBase) = 0.max(precioBase - valorFijo)
+}
+object liquidacion {
+
+	method precioSegunEstado(precioBase) = 0.5 * precioBase
+}
+
