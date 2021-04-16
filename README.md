@@ -1,4 +1,4 @@
-# java-base-project
+# Ejercicio de Macowins
 
 # Ejecutar tests
 
