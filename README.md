@@ -5,6 +5,8 @@
 # Estudiante
 Nombre y apellido: Franco Banfi
 
-![mi foto](https://user-images.githubusercontent.com/62450599/114974294-7f995d00-9e58-11eb-9fbf-08e970653d64.jpg)
+![Captura de pantalla 2021-04-10 141242](https://user-images.githubusercontent.com/62450599/114977431-08ff5e00-9e5e-11eb-85ec-60e032ad519a.jpg)
+
+
 
 
