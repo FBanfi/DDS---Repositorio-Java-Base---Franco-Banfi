@@ -1,4 +1,4 @@
-# Ejercicio de Macowins
+# Ejercicios Semanales DDS
 
 # Diagrama de Clases y Pseudocódigo
 
