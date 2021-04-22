@@ -1,0 +1,108 @@
+/*
+class Usuario {
+    list<Prenda> guardarropas = new ArrayList<Prenda>;
+
+    void agregarPrenda(Prenda prenda){
+	    this.guardarropas.add(prenda)
+	}
+
+	Prenda tirar(Prenda prenda){
+		this.guardarropas.remove(prenda);
+	}
+}
+No es relevante a la solución de esta entrega, pero nos ayuda a ponernos en contexto
+*/
+
+class Prenda{
+		
+	TipoPrenda tipo;
+	Material material;
+	Color colorPrincipal;
+	Color colorSecundario = NULL;
+	
+	public Prenda(TipoPrenda tipo, Material material, Color colorPrincipal){
+		
+		this.tipo = requireNonNull(tipo, "Falta el tipo!");
+		this.material = requireNonNull(material, "Falta el material!");
+		this.colorPrincipal = requireNonNull(colorPrincipal, "Falta el color principal!");
+	}
+
+	public Categoria catgoriaPrenda(){
+		
+		return tipo.getCategoria();
+	}
+
+	public setterColorSecundario(Color colorSecundario){
+		
+		this.colorSecundario = colorSecundario;
+	}
+}
+
+
+class TipoPrenda{
+
+	Categoria categoria;
+	
+	puiblic TipoPrenda(Categoria categoria){
+		this.categoria = categoria
+		
+	}
+
+	public Categoria getCategoria(){
+			
+		return this.categoria;
+	}
+}
+
+//Prendas inferiores
+TipoPrenda pantalon = new TipoPrenda(INFERIOR);
+//Prendas superiores
+TipoPrenda camisaFacherita = new TipoPrenda(SUPERIOR);
+
+
+public enum Categoria{
+
+	SUPERIOR,
+	INFERIOR,
+	CALZADO,
+	ACCESORIOS
+}
+
+/*
+public enum Color{
+	
+	ROJO,
+	AZUL,
+	AMARILLO,
+	VERDE,
+	VIOLETA,
+	NARANJA,
+	NEGRO,
+	BLANCO,
+	MARRON
+}
+
+Esta es otra solucion repecto a los colores, pero la descartamos ya que deberiamos agregar diferentes tonos de colores y no es una abstraccion muy util.
+*/
+
+class Color{
+
+	int valorRojo;
+	int  valorVerde;
+	int valorAzul;
+
+	public Color(int valorRojo, int valorVerde, int valorAzul){
+		
+		this.valorRojo;
+		this.valorVerde;
+		this.valorAzul;
+	}  	
+}
+
+public enum Material{
+
+	LANA,
+	SEDA,
+	ALGODON,
+	POLIESTER
+}
