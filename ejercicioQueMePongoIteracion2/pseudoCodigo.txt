@@ -1,3 +1,4 @@
+// Los uniformes no sabia bien como plantearlos asi se me ocurrió esto pero no me gusta
 enum Uniforme {
    Prenda parteSuperior;
    Prenda parteInferior;
