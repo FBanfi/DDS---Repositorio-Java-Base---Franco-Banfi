@@ -1,0 +1,230 @@
+enum Uniforme {
+   Prenda parteSuperior;
+   Prenda parteInferior;
+   Prenda calzado
+
+   SANJUAN {
+       parteSuperior = new Prenda(TipoPrenda.CHOMBA);       //Se llenarian todas las prendas como en el caso de esta chomba
+       parteSuperior.configurarRestoDePrenda(Material.ACETATO, Color.color(12,545,35), null, null);
+       parteInferior = new Prenda(TipoPrenda.PANTALON);
+       parteInferior.configurarRestoDePrenda(...);
+       calzado = new Prenda(TipoPrenda.ZAPATILLAS);
+       calzado.configurarRestoDePrenda(...);
+   },
+   JOHNSON {
+       parteSuperior = new Prenda(...);                 //Y así vamos cargando los diferentes enum, que hacen referencia a los uniformes de los distintos colegios
+       parteSuperior.configurarRestoDePrenda(...);
+       parteInferior = new Prenda(...);
+       parteInferior.configurarRestoDePrenda(...);
+       calzado = new Prenda(...);
+       calzado.configurarRestoDePrenda(...);
+   }
+
+}
+
+class Borrador {    // Se que usar SINGLETON no es una muy buena solución porque genera muchos temas con los test, entre otros
+                    // pero no se me ocurría como modelarlo y a lo mejor pasandole una lista con todas las prendas que estan en borrador se puede utilizar
+
+    List<Prenda> prendasEnBorrador;
+    static Borrador INSTANCE = new Borrador();
+
+    public Borrador instance(){
+        return INSTANCE;
+    }
+
+    public Borrador(List<Prenda> prendasEnBorrador) {
+      this.prendasEnBorrador = prendasEnBorrador;
+}
+
+class Prenda{     // No copie el código entero de prenda para que sea mas fácil distinguir que es lo que se le agregó de la nueva iteración
+    ...
+
+    Trama trama;
+
+    // generamos el nuevo constructor ya que al crear una prenda primero quiere establecer su tipo
+    public Prenda(TipoPrenda tipo) {
+      this.tipo = requireNonNull(tipo, "Falta el tipo!");
+    }
+
+    public void configurarRestoDePrenda(Material material, Color colorPrincipal, Color colorSecundario, Trama trama){  //hacemos un setter para cargar los valores de color, material, trama, etc
+        this.verificarTipo(tipo);
+        this.verificarMaterial(material);
+        this.verificarColorPrimario(colorPrincipal);
+        this.material = requireNonNull(material, "Falta el material!");
+        this.colorPrincipal = requireNonNull(colorPrincipal, "Falta el color principal!");
+        this.colorSecundario = colorSecundario;     // No le pongo el require no null porque puede llegar a pasar que NO haya color secundario
+        if (trama == null) {
+
+            this.trama = TipoPrenda.LISA;       //Para que por Default si no le ingresamos una trama especifica, la misma sea Lisa
+        }
+        else {
+            this.trama = trama;
+        }
+    }
+
+    public void agregarEnBorrador() {
+        Borrador.add(this);
+    }
+
+    //VALIDACIONES
+    public void verificarTipo(TipoPrenda tipo) {
+        if(tipo == null) {
+            throw new TipoInvalidoException("No puede dejar el tipo vacío")
+        }
+    }
+    public void verificarMaterial(Material material) {
+        if(material == null) {
+            throw new MaterialInvalidoException("No puede dejar el material vacío")
+        }
+    }
+    public void verificarColorPrimario(Color colorPrimario) {
+        if(colorPrimario == null) {
+            throw new ColorPrimarioInvalidoException("No puede dejar el color primario vacío")
+        }
+    }
+
+    ...
+
+}
+
+public enum Trama {
+
+    LISA,
+    RAYADA,
+    LUNARES,
+    CUADROS,
+    ESTAMPADO
+}
+
+enum TipoPrenda {
+    ...     //A lo anterior le agregamos
+
+    ZAPATILLAS(Categoria.CALZADO);
+    CHOMBA(Categoria.SUPERIOR);
+    PANTALON(Categoria.INFERIOR);
+
+}
+
+//EXCEPCIONES PARA VALIDAR LAS COSAS
+public TipoInvalidoException extends RuntimeException{
+
+	String mensaje;
+
+	public TipoInvalidoException(String mensaje){
+
+		this.mensaje = mensaje;
+	}
+
+	void TipoInvalidoException(){
+
+		super("Le falto introducir un tipo: " + mensaje);
+	}
+}
+public MaterialInvalidoException extends RuntimeException{
+
+	String mensaje;
+
+	public MaterialInvalidoException(String mensaje){
+
+		this.mensaje = mensaje;
+	}
+
+	void MaterialInvalidoException(){
+
+		super("Le falto introducir un material: " + mensaje);
+	}
+}
+public ColorPrimarioInvalidoException extends RuntimeException{
+
+	String mensaje;
+
+	public ColorPrimarioInvalidoException(String mensaje){
+
+		this.mensaje = mensaje;
+	}
+
+	void ColorPrimarioInvalidoException(){
+
+		super("Le falto introducir un color primario: " + mensaje);
+	}
+}
+
+//-----------------------------------------------------------------------------------------------------------------------
+//      Cosas de la primer Iteracion
+//-----------------------------------------------------------------------------------------------------------------------
+
+class Prenda{
+
+	TipoPrenda tipo;
+	Material material;
+	Color colorPrincipal;
+	Color colorSecundario = NULL;
+	Trama trama;
+
+	public Prenda(TipoPrenda tipo, Material material, Color colorPrincipal){
+
+		this.tipo = requireNonNull(tipo, "Falta el tipo!");
+		this.material = requireNonNull(material, "Falta el material!");
+		this.colorPrincipal = requireNonNull(colorPrincipal, "Falta el color principal!");
+	}
+
+	public Categoria catgoriaPrenda(){
+
+		return tipo.getCategoria();
+	}
+
+	public agregarColorSecundario(Color colorSecundario){
+
+		this.colorSecundario = colorSecundario;
+	}
+}
+
+enum TipoPrenda{
+
+	Categoria categoria;
+
+	public TipoPrenda(Categoria categoria){
+		this.categoria = categoria
+
+	}
+
+	public Categoria getCategoria(){
+
+		return this.categoria;
+	}
+
+    ZAPATO(Categoria.CALZADO),
+    CAMISA(Categoria.SUPERIOR),
+    ...
+
+}
+
+public enum Categoria{
+
+	SUPERIOR,
+	INFERIOR,
+	CALZADO,
+	ACCESORIOS
+}
+
+class Color{
+
+	int valorRojo;
+	int  valorVerde;
+	int valorAzul;
+
+	public Color(int valorRojo, int valorVerde, int valorAzul){
+
+		this.valorRojo;
+		this.valorVerde;
+		this.valorAzul;
+	}
+}
+
+public enum Material{
+
+	LANA,
+	SEDA,
+	ALGODON,
+	POLIESTER
+}
